@@ -1,0 +1,83 @@
+<div class="container pt-5">
+
+  <div class="d-flex justify-content-around">
+  <!-- <select
+    class="form-select w-50 mx-auto d-inline"
+    [formControl]="rxempform.controls['nodeID']"
+    (change)="GetChart()"
+  >
+    <option value="0" disabled>--Select--</option>
+    <option *ngFor="let item of rxusers" value="{{ item.nodeId }}">
+      {{ item.employeeName }}
+    </option>
+  </select> -->
+
+      <div class="dropdown  h-100  d-inline" class="statusDropdownContainer">
+        RxEmployee : <a
+          class="
+            btn btn-primary
+            dropdown-toggle
+            statusFilterDropdown
+            h-100
+            flex-middle
+          "
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="text-truncate"
+            > {{ selectedValue ? selectedValue : 'Select' }}</span
+          >
+        </a>
+        <div class="dropdown-menu w-50 h-25 pt-0 overflow-auto" aria-labelledby="dropdownMenuButton">
+          <input
+            type="text"
+            class="w-100 p-2 searchInput "
+            [(ngModel)]="searchValue"
+            (keyup)="filterDropdown()"
+            placeholder="Search an Employee"
+          />
+          <a
+            *ngFor="let option of filteredList; let i = index"
+            class="dropdown-item pointer text-contain"
+            [ngClass]="{ alternateBackground: i % 2 == 0 }"
+            (click)="selectValue(option.employeeName,option.nodeId)"
+          >
+            {{ option.employeeName }}
+          </a>
+          <div *ngIf="filteredList.length <= 0" class="text-center text-muted mt-1">
+            No employee found
+          </div>
+        </div>
+      </div>
+  
+    <button class="btn btn-success float-end" (click)="GetFullChart()">View Full Organization Chart</button>  
+
+    </div>
+
+
+    <div *ngIf="!data" class="text-center pt-5">
+
+        <img  src="assets/images/org-image.png" alt="org-chart" width="500px" class="pt-5">
+        <h6 class="pt-5">An organizational chart shows the internal structure of an organization or company. The employees and positions are represented by boxes or other shapes.</h6>
+
+        
+        
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M18 15l-6 -6l-6 6h12" />
+          </svg>
+
+          <span class="triangle-down"></span>
+          <span class="triangle-up"></span> -->
+
+    </div>
+
+    <div class="pt-2">
+        <div #chartContainer id="chartContainer" class="border"></div>
+    </div>
+
+</div>

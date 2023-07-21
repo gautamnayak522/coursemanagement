@@ -1,0 +1,114 @@
+<div class="container pt-5">
+
+    <form [formGroup]="paginationform">
+
+        <p>Search:
+            <input type="text" class=" d-inline form-control w-25 mx-2" formControlName="serchterm"
+                (keyup)="changePage()">
+        </p>
+
+
+        <div style="overflow-x:auto ;">
+
+            <div>
+                <p *ngIf="Products==''" class="text-center fw-bold">No matching records found</p>
+            </div>
+
+            <div *ngIf="Products!=''">
+                <table class="table table-striped text-center">
+                    <caption>Products</caption>
+                    <thead>
+                        <th (click)="sortdata('productId')">ID <span *ngIf="checkStatus('productId',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('productId',false)"
+                                class="fa fa-sort-amount-desc"></span> </th>
+
+                        <th (click)="sortdata('productName')">Name <span *ngIf="checkStatus('productName',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('productName',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('Price')">Price <span *ngIf="checkStatus('Price',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('Price',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('mafDate')">Maf. Date <span *ngIf="checkStatus('mafDate',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('mafDate',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('mafAt')">Maf. At <span *ngIf="checkStatus('mafAt',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('mafAt',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('sku')">SKU <span *ngIf="checkStatus('sku',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('sku',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('quantity')">Quantity <span *ngIf="checkStatus('quantity',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('quantity',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th (click)="sortdata('supplier')">Supplier<span *ngIf="checkStatus('supplier',true)"
+                                class="fa fa-sort-amount-asc"></span> <span *ngIf="checkStatus('supplier',false)"
+                                class="fa fa-sort-amount-desc"></span></th>
+
+                        <th class="w-25">Description</th>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of Products">
+                            <td>{{item.productId}}</td>
+                            <td>{{item.productName}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.mafDate | date}}</td>
+                            <td>{{item.mafAt}}</td>
+                            <td>{{item.sku}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.supplier}}</td>
+                            <td>{{item.description}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+
+                <nav aria-label="...">
+
+                    <div class="d-flex justify-content-around align-items-center">
+                        <p>Show
+                            <select class="p-1 rounded text-primary border" formControlName="pageSize"
+                                (change)="changeSize()">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                            entries
+                        </p>
+
+                        <!-- <p class="fw-bold">Showing {{paginationform.controls['pageNo'].value==1?1:(paginationform.controls['pageNo'].value || 1 )* (paginationform.controls['pageSize'].value ||1)+1- (paginationform.controls['pageSize'].value ||1)}} to {{(paginationform.controls['pageNo'].value || 1 )* (paginationform.controls['pageSize'].value ||1)}}</p> -->
+
+                        <p class="fw-bold">Showing {{startWith}} to {{endwith}} of {{totalRecords}} entries</p>
+                        <ul class="pagination">
+
+                            <li class="page-item">
+                                <a class="page-link" (click)="previous()">Previous</a>
+                            </li>
+
+                            <li class="page-item" *ngFor="let item of Noofpages; let i = index"><a class="page-link"
+                                    [ngClass]="(i+1 == paginationform.controls['pageNo'].value) ? 'active': ''"
+                                    (click)="changePage(i+1)">{{i+1}}</a></li>
+
+                            <li class="page-item">
+                                <a class="page-link" (click)="next()">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+            </div>
+
+
+
+        </div>
+    </form>
+
+</div>

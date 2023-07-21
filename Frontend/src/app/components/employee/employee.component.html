@@ -1,0 +1,131 @@
+<div class="container pt-5">
+    <button class="btn btn-success" (click)="open(addEmployee)" [disabled]="userPermissions!=null?!userPermissions.canAdd:null">+ Add Employee</button>
+    <table class="table table-striped pt-5">
+        <caption>Employees</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Department</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of employees">
+                <td>{{item.empId}}</td>
+                <td>{{item.firstName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.mobileNo}}</td>
+                <td>{{item.emailAddress}}</td>
+                <td>
+                    {{item.deptId!=null?GetDepartmentName(item.deptId):"No Department"}}
+                </td>
+                <td>
+                    <div>
+                        <button class="btn btn-secondary mx-2" (click)="open(updateemployee)"
+                            (click)="updateEmployee(item)" [disabled]="userPermissions!=null?!userPermissions.canUpdate:null"><i class="fa fa-pencil-square-o"
+                                aria-hidden="true"></i></button>
+                        <button class="btn btn-danger" (click)="deleteEmployee(item.empId)" [disabled]="userPermissions!=null?!userPermissions.canDelete:null"><i class="fa fa-trash"
+                                aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Update Employee Modal -->
+
+<ng-template #updateemployee let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update Employee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="employeeform">
+            <div class="form-group my-2">
+                <label for="title">First Name</label>
+                <input type="text" class="form-control" formControlName="firstName">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Email Address</label>
+                <input type="text" class="form-control" formControlName="emailAddress">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Mobile No</label>
+                <input type="text" class="form-control" formControlName="mobileNo">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Department</label>
+                <select name="" id="" class="form-control" formControlName="deptId">
+                    <option value="" selected disabled hidden>Select</option>
+                    <option *ngFor="let item of departments" [value]="item.deptId">{{item.deptName}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="modal.close('Save click');savechanges()">Save
+            Changes</button>
+    </div>
+</ng-template>
+
+
+<!-- Update Employee Modal -->
+
+<ng-template #addEmployee let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add Employee</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="employeeform">
+            <div class="form-group my-2">
+                <label for="title">First Name</label>
+                <input type="text" class="form-control" formControlName="firstName">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Email Address</label>
+                <input type="text" class="form-control" formControlName="emailAddress">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Mobile No</label>
+                <input type="text" class="form-control" formControlName="mobileNo">
+            </div>
+            <div class="form-group my-2">
+                <label for="title">Department</label>
+                <select name="" id="" class="form-control" formControlName="deptId">
+                    <option value="" selected disabled hidden>Select</option>
+                    <option *ngFor="let item of departments" [value]="item.deptId">{{item.deptName}}</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="modal.close('Save click');addnewEmployee()">Add
+            Employee</button>
+    </div>
+</ng-template>
+
+
+<!-- {{closeResult}} -->

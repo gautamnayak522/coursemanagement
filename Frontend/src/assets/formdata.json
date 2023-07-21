@@ -1,0 +1,23 @@
+[
+    {
+        "fieldName": "Name",
+        "fieldType": "text",
+        "required": true
+    },
+    {
+        "fieldName": "Email",
+        "fieldType": "email",
+        "required": true,
+        "validator": "email"
+    },
+    {
+        "fieldName": "Message",
+        "fieldType": "text",
+        "required": null
+    },
+    {
+        "fieldName": "MobileNo",
+        "fieldType": "number",
+        "required": null
+    }
+]
