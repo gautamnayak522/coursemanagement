@@ -1,0 +1,32 @@
+
+<div class="container pt-5">
+    <button class="btn btn-success" [disabled]="userPermissions!=null?!userPermissions.canAdd:null">+ Add Department</button>
+    <table class="table table-striped pt-5">
+        <caption>Departments</caption>
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of departments">
+                <td>{{item.deptId}}</td>
+                <td>{{item.deptName}}</td>
+                <td>
+                    <div>
+                    <button class="btn btn-secondary mx-2" [disabled]="userPermissions!=null?!userPermissions.canUpdate:null"><i class="fa fa-pencil-square-o"
+                        aria-hidden="true"></i></button>
+                    <button class="btn btn-danger" [disabled]="userPermissions!=null?!userPermissions.canDelete:null"><i class="fa fa-trash"
+                        aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<button (click)="setvalue()">Save</button>
+{{value}}

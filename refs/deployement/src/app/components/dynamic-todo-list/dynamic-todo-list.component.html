@@ -1,0 +1,46 @@
+<div class="container pt-5">
+
+
+
+<div cdkDropListGroup  >
+   
+    <div cdkDrag>
+        <input type="text" class="form-control w-25 d-inline" [(ngModel)]="newtodo" placeholder="New Task">
+        <button (click)="addtolist()" class="btn btn-primary mx-3 ">Add task</button>
+        <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
+    </div>
+
+    <div class="example-container" cdkDrag >
+      <h2>To do List</h2>
+      <div
+        cdkDropList
+        [cdkDropListData]="todo"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+      </div>
+      {{todo|json}}
+    </div>
+  
+    <div class="example-container" cdkDrag>
+      <h2>Done List</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag><span class="text-decoration-line-through">{{item}}</span></div>
+      </div>
+      {{done | json}}
+    </div>
+
+    
+   
+
+
+    
+  </div>
+
+</div>
+  

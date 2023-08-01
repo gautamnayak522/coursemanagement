@@ -1,0 +1,104 @@
+<div class="container pt-5">
+    <h6 class="text-center ">Select a User to Manage Permissions</h6>
+    <select class="form-select w-50 mx-auto" [formControl]="userform.controls['userID']" (change)='GetPermissions()'>
+
+        <option value=0 disabled>--Select--</option>
+        <option *ngFor="let item of users" value={{item.userID}}>
+            {{item.userName}}
+        </option>
+    </select>
+
+    <h6 class="text-center text-danger pt-3" *ngIf="!checkuser()">You Can't Change your Own Permissions</h6>
+
+
+    <div *ngIf="this.userform.value['userID']!=0">
+
+        <div class=" mt-5">
+            <div >
+                <table class="table table-striped pt-2 text-center">
+                    <caption>User Permissions</caption>
+                    <thead>
+                        <tr>
+                            <th>Module Name</th>
+                            <th scope="col">CanView</th>
+                            <th scope="col">CanAdd</th>
+                            <th scope="col">CanUpdate</th>
+                            <th scope="col">CanDelete</th>
+                            <th scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of userpermissions">
+                        <tr>
+                            <td>{{item.module.moduleName}}</td>
+                            <td><span *ngIf="item.calView" class="fa fa-check  text-primary p-1"></span> <span
+                                    *ngIf="!item.calView" class="fa fa-times  p-1 text-danger"></span> </td>
+                            <td> <span *ngIf="item.canAdd" class="fa fa-check  text-primary  p-1"></span> <span
+                                    *ngIf="!item.canAdd" class="fa fa-times   p-1 text-danger"></span> </td>
+                            <td> <span *ngIf="item.canUpdate" class="fa fa-check  text-primary  p-1"></span> <span
+                                    *ngIf="!item.canUpdate" class="fa fa-times  p-1 text-danger"></span></td>
+                            <td> <span *ngIf="item.canDelete" class="fa fa-check  text-primary p-1"></span> <span
+                                    *ngIf="!item.canDelete" class="fa fa-times  p-1 text-danger"></span></td>
+                            <td>
+                                <button *ngIf="checkuser()" class="btn btn-primary" (click)="changepermission(item);open(editpermissions)"
+                                    [disabled]="userPermissions!=null?!userPermissions.canUpdate:null"><span class="fa fa-pencil-square-o"></span></button>
+                                <button *ngIf="!checkuser() " class="btn btn-primary" disabled><span class="fa fa-pencil-square-o"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #editpermissions let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Manage Permissions</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="permissionsform">
+
+            <div class="form-group my-2">
+                <label for="title">User Name</label>
+                <input type="text" class="form-control" disabled [value]="GetUserName(this.permissionsform.value['userId'])">
+            </div>
+
+            <div class="form-group my-2">
+                <label for="title">Module Name</label>
+                <input type="text" class="form-control" disabled [value]="this.moduleName">
+            </div>
+
+            <h4>Permissions</h4>
+            <table class="table table-striped text-center">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th>View</th>
+                        <th>Add</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                        <td><input type="checkbox" class="form-control" formControlName="calView" id="calView" class="form-check-input"   /></td>
+                        <td><input type="checkbox" class="form-control" formControlName="canAdd" id="canAdd" class="form-check-input"   /></td>
+                        <td><input type="checkbox" class="form-control" formControlName="canUpdate" id="canUpdate" class="form-check-input"   /></td>
+                        <td><input type="checkbox" class="form-control" formControlName="canDelete" id="canDelete" class="form-check-input"   /></td>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="updatepermissions();modal.close('Save click')">Save
+            Changes</button>
+    </div>
+</ng-template>
